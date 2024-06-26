@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3jvajrm38vqm"]
+
+[ext_resource type="Script" path="res://scripts/traps/saw_trap.gd" id="1_cfcoa"]
+[ext_resource type="Texture2D" uid="uid://cflsjemj7fkha" path="res://assets/obstacle/Foozle_2DS0007_Pixel_Trap_Pack/Saw Trap - Level 3.png" id="1_fm7jy"]
+
+[sub_resource type="Animation" id="Animation_2l4hi"]
+length = 0.001
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Saw:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_pfxq1"]
+resource_name = "saw_trap"
+length = 1.80001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Saw:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_28agd"]
+_data = {
+"RESET": SubResource("Animation_2l4hi"),
+"saw_trap": SubResource("Animation_pfxq1")
+}
+
+[node name="Saw_Trap" type="Node2D" node_paths=PackedStringArray("animator")]
+script = ExtResource("1_cfcoa")
+animator = NodePath("AnimationPlayer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_28agd")
+}
+
+[node name="Saw" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_fm7jy")
+hframes = 18

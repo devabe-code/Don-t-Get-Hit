@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn1btej3qqdk"]
+
+[ext_resource type="Texture2D" uid="uid://bbrcaanrii01d" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-back-trees.png" id="1_ov3q4"]
+[ext_resource type="Texture2D" uid="uid://cipy3w1cqvvxw" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-middle-trees.png" id="2_aq08i"]
+
+[node name="Forbidden_Forest" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Back_Forest" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Forest" type="Sprite2D" parent="ParallaxBackground/Back_Forest"]
+texture_filter = 1
+scale = Vector2(1.175, 1.175)
+texture = ExtResource("1_ov3q4")
+centered = false
+
+[node name="Middle_Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Trees" type="Sprite2D" parent="ParallaxBackground/Middle_Trees"]
+texture_filter = 1
+scale = Vector2(1.175, 1.175)
+texture = ExtResource("2_aq08i")
+centered = false

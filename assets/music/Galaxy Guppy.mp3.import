@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dqi1xx1l8mu73"
+path="res://.godot/imported/Galaxy Guppy.mp3-551eaf945c96fb959140e30b60e27eba.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Galaxy Guppy.mp3"
+dest_files=["res://.godot/imported/Galaxy Guppy.mp3-551eaf945c96fb959140e30b60e27eba.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
