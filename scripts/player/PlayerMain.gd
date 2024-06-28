@@ -5,8 +5,10 @@ class_name PlayerMain
 
 @export var animator : AnimationPlayer
 @export var dash_max := int(300)
+@export var speed_timer : Timer
 
-const MOVE_SPEED = int(0)
+var DIFFICULTY = int(10)
+var MOVE_SPEED = int(100)
 var GRAVITY = ProjectSettings.get_setting("physics/2d/default_gravity")
 var input_dir : float
 
@@ -17,9 +19,11 @@ var can_dash := bool(false)
 var can_jump := bool(true)
 var can_be_hit := bool(true)
 
+func _ready():
+	speed_timer.start(DIFFICULTY)
+
 func _process(delta):
 	player_to_screen = get_global_transform_with_canvas().get_origin().x
-	speed_multiplier()
 	
 	velocity.x = MOVE_SPEED + dashspeed
 	
@@ -63,5 +67,5 @@ func LessenDash(delta):
 		if (dashspeed >= 0):
 			can_dash = true
 
-func speed_multiplier():
-	pass
+func _on_timer_timeout():
+	MOVE_SPEED += 10

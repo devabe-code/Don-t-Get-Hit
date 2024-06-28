@@ -3,7 +3,7 @@ class_name PlayerJump
 
 @export var has_jumped : bool
 @export var player : CharacterBody2D
-@export var JUMP_VELOCITY := -380
+@export var JUMP_VELOCITY := -450
 
 func Enter():
 	print("Jumping")

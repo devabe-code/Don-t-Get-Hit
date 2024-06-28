@@ -1,24 +1,79 @@
-[gd_scene load_steps=3 format=3 uid="uid://dn1btej3qqdk"]
+[gd_scene load_steps=12 format=3 uid="uid://d100ruggcmwcl"]
 
 [ext_resource type="Texture2D" uid="uid://bbrcaanrii01d" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-back-trees.png" id="1_ov3q4"]
 [ext_resource type="Texture2D" uid="uid://cipy3w1cqvvxw" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-middle-trees.png" id="2_aq08i"]
+[ext_resource type="Texture2D" uid="uid://c2fooiatnsl6m" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-lights.png" id="2_lbj5g"]
+[ext_resource type="Texture2D" uid="uid://cbg7br4242bn3" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-front-trees.png" id="4_iqwh2"]
+[ext_resource type="PackedScene" uid="uid://cqv2gmns51ivy" path="res://scenes/players/player.tscn" id="5_6fbs2"]
+[ext_resource type="Script" path="res://scripts/misc/CameraBody.gd" id="6_fwfwv"]
+[ext_resource type="Script" path="res://scripts/traps/TrapLogic.gd" id="7_5an1i"]
+[ext_resource type="PackedScene" uid="uid://b3jvajrm38vqm" path="res://scenes/traps/saw_trap.tscn" id="8_t74ru"]
+[ext_resource type="PackedScene" uid="uid://7ksy5dj8gr03" path="res://scenes/infinite_ground.tscn" id="9_snxd2"]
+[ext_resource type="Script" path="res://scripts/misc/Ground.gd" id="10_3c6c5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwseq"]
 
 [node name="Forbidden_Forest" type="Node2D"]
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+[node name="Forest_Parallax" type="ParallaxBackground" parent="."]
 
-[node name="Back_Forest" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="Back_Forest" type="ParallaxLayer" parent="Forest_Parallax"]
+motion_scale = Vector2(0, 0)
 
-[node name="Forest" type="Sprite2D" parent="ParallaxBackground/Back_Forest"]
+[node name="Forest_Layer" type="Sprite2D" parent="Forest_Parallax/Back_Forest"]
 texture_filter = 1
 scale = Vector2(1.175, 1.175)
 texture = ExtResource("1_ov3q4")
 centered = false
 
-[node name="Middle_Trees" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="Lights" type="Sprite2D" parent="Forest_Parallax/Back_Forest"]
+texture_filter = 1
+texture = ExtResource("2_lbj5g")
+centered = false
 
-[node name="Trees" type="Sprite2D" parent="ParallaxBackground/Middle_Trees"]
+[node name="Middle_Trees" type="ParallaxLayer" parent="Forest_Parallax"]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(310, 0)
+
+[node name="Middle_Trees_Layer" type="Sprite2D" parent="Forest_Parallax/Middle_Trees"]
 texture_filter = 1
 scale = Vector2(1.175, 1.175)
 texture = ExtResource("2_aq08i")
 centered = false
+
+[node name="Front_Trees" type="ParallaxLayer" parent="Forest_Parallax"]
+motion_mirroring = Vector2(310, 0)
+
+[node name="Front_Trees_Layer" type="Sprite2D" parent="Forest_Parallax/Front_Trees"]
+texture_filter = 1
+scale = Vector2(1.175, 1.175)
+texture = ExtResource("4_iqwh2")
+centered = false
+
+[node name="Player" parent="." instance=ExtResource("5_6fbs2")]
+position = Vector2(141, 175)
+
+[node name="CameraBody" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player")]
+position = Vector2(160, 100)
+script = ExtResource("6_fwfwv")
+player = NodePath("../Player")
+
+[node name="Camera2D" type="Camera2D" parent="CameraBody"]
+position = Vector2(0, 20)
+zoom = Vector2(1.25, 1.25)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CameraBody"]
+shape = SubResource("RectangleShape2D_xwseq")
+disabled = true
+
+[node name="Traps" type="Node2D" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("7_5an1i")
+camera = NodePath("../CameraBody")
+
+[node name="Saw_Trap" parent="Traps" instance=ExtResource("8_t74ru")]
+position = Vector2(69, 34)
+scale = Vector2(2, 2)
+
+[node name="InfiniteGround" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_snxd2")]
+script = ExtResource("10_3c6c5")
+player = NodePath("../Player")

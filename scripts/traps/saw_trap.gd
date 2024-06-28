@@ -1,9 +1,11 @@
-extends Node2D
+extends Trap
 
 @export var animator : AnimationPlayer
 
 func _ready():
-	print("ready")
+	set_name("Saw Trap")
 	animator.play("saw_trap")
-	print(animator.is_playing())
+
+func _process(delta):
+	pass
 
