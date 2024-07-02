@@ -6,9 +6,11 @@ class_name PlayerMain
 @export var animator : AnimationPlayer
 @export var dash_max := int(300)
 @export var speed_timer : Timer
+@export var hitbox : Area2D
+@export var trap : Node2D
 
-var DIFFICULTY = int(10)
-var MOVE_SPEED = int(100)
+var DIFFICULTY = int(4)
+var MOVE_SPEED = int(150)
 var GRAVITY = ProjectSettings.get_setting("physics/2d/default_gravity")
 var input_dir : float
 
@@ -17,14 +19,13 @@ var dashspeed := int(200)
 var is_rolling := bool(false)
 var can_dash := bool(false)
 var can_jump := bool(true)
-var can_be_hit := bool(true)
+var curr_state : String
 
 func _ready():
 	speed_timer.start(DIFFICULTY)
 
 func _process(delta):
 	player_to_screen = get_global_transform_with_canvas().get_origin().x
-	
 	velocity.x = MOVE_SPEED + dashspeed
 	
 	# Add the gravity.
@@ -32,7 +33,6 @@ func _process(delta):
 		velocity.y += GRAVITY * delta
 	
 	move_and_slide()
-	
 	LessenDash(delta)
 	
 	input_dir = Input.get_axis("dash_back","dash_forward")
@@ -68,4 +68,13 @@ func LessenDash(delta):
 			can_dash = true
 
 func _on_timer_timeout():
-	MOVE_SPEED += 10
+	if MOVE_SPEED < 300:
+		MOVE_SPEED += 5
+
+func _on_hitbox_area_entered(area):
+	print("dead")
+	#fsm.force_change_state("PlayerDeath")
+
+
+func _on_activation_area_area_entered(area):
+	print(area.get_parent().animation_name)

@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="CompressedTexture2D"
+uid="uid://8upox0vaf216"
+path="res://.godot/imported/blue-!arrowdown.png-d3e6b70552c8f2bc90279bea8b13b06f.ctex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/UI/Pixel Fantasy Icons Letter Buttons/blue-!arrowdown.png"
+dest_files=["res://.godot/imported/blue-!arrowdown.png-d3e6b70552c8f2bc90279bea8b13b06f.ctex"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/normal_map=0
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+roughness/mode=0
+roughness/src_normal=""
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/normal_map_invert_y=false
+process/hdr_as_srgb=false
+process/hdr_clamp_exposure=false
+process/size_limit=0
+detect_3d/compress_to=1

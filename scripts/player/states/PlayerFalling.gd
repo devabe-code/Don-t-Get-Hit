@@ -5,7 +5,7 @@ class_name PlayerFalling
 @export var player : CharacterBody2D
 
 func Enter():
-	print("Falling")
+	player.curr_state = "Falling"
 	landed = false
 	player.animator.play("falling")
 

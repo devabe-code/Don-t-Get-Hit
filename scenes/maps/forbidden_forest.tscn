@@ -1,15 +1,18 @@
-[gd_scene load_steps=12 format=3 uid="uid://d100ruggcmwcl"]
+[gd_scene load_steps=15 format=3 uid="uid://d100ruggcmwcl"]
 
 [ext_resource type="Texture2D" uid="uid://bbrcaanrii01d" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-back-trees.png" id="1_ov3q4"]
 [ext_resource type="Texture2D" uid="uid://cipy3w1cqvvxw" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-middle-trees.png" id="2_aq08i"]
 [ext_resource type="Texture2D" uid="uid://c2fooiatnsl6m" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-lights.png" id="2_lbj5g"]
 [ext_resource type="Texture2D" uid="uid://cbg7br4242bn3" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/parallax-forest-front-trees.png" id="4_iqwh2"]
 [ext_resource type="PackedScene" uid="uid://cqv2gmns51ivy" path="res://scenes/players/player.tscn" id="5_6fbs2"]
+[ext_resource type="Texture2D" uid="uid://dmsny1yacx4qg" path="res://assets/maps/parallax_forest/parallax_forest_pack web/layers/ground.png" id="5_60yf4"]
 [ext_resource type="Script" path="res://scripts/misc/CameraBody.gd" id="6_fwfwv"]
 [ext_resource type="Script" path="res://scripts/traps/TrapLogic.gd" id="7_5an1i"]
-[ext_resource type="PackedScene" uid="uid://b3jvajrm38vqm" path="res://scenes/traps/saw_trap.tscn" id="8_t74ru"]
 [ext_resource type="PackedScene" uid="uid://7ksy5dj8gr03" path="res://scenes/infinite_ground.tscn" id="9_snxd2"]
 [ext_resource type="Script" path="res://scripts/misc/Ground.gd" id="10_3c6c5"]
+[ext_resource type="AudioStream" uid="uid://bp3bdo5ivqukg" path="res://assets/music/Ember.mp3" id="11_ft7m3"]
+[ext_resource type="Script" path="res://scripts/misc/BeatDetection.gd" id="12_xrlrm"]
+[ext_resource type="PackedScene" uid="uid://crl8ybfi34r7x" path="res://scenes/input_manager.tscn" id="13_sid5t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xwseq"]
 
@@ -50,30 +53,55 @@ scale = Vector2(1.175, 1.175)
 texture = ExtResource("4_iqwh2")
 centered = false
 
-[node name="Player" parent="." instance=ExtResource("5_6fbs2")]
-position = Vector2(141, 175)
+[node name="Ground_Parallax" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Ground_Parallax"]
+motion_mirroring = Vector2(320, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground_Parallax/ParallaxLayer"]
+texture_filter = 1
+texture = ExtResource("5_60yf4")
+centered = false
+offset = Vector2(0, 15.99)
+
+[node name="InfiniteGround" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_snxd2")]
+position = Vector2(0, -1.755)
+script = ExtResource("10_3c6c5")
+player = NodePath("../Player")
+
+[node name="Player" parent="." node_paths=PackedStringArray("trap") instance=ExtResource("5_6fbs2")]
+position = Vector2(160, 180)
+trap = NodePath("../Traps")
 
 [node name="CameraBody" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player")]
-position = Vector2(160, 100)
+position = Vector2(160, 119.275)
 script = ExtResource("6_fwfwv")
 player = NodePath("../Player")
 
 [node name="Camera2D" type="Camera2D" parent="CameraBody"]
-position = Vector2(0, 20)
+position = Vector2(3, 4)
 zoom = Vector2(1.25, 1.25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CameraBody"]
 shape = SubResource("RectangleShape2D_xwseq")
 disabled = true
 
-[node name="Traps" type="Node2D" parent="." node_paths=PackedStringArray("camera")]
+[node name="Traps" type="Node2D" parent="." node_paths=PackedStringArray("camera", "player")]
 script = ExtResource("7_5an1i")
 camera = NodePath("../CameraBody")
-
-[node name="Saw_Trap" parent="Traps" instance=ExtResource("8_t74ru")]
-position = Vector2(69, 34)
-scale = Vector2(2, 2)
-
-[node name="InfiniteGround" parent="." node_paths=PackedStringArray("player") instance=ExtResource("9_snxd2")]
-script = ExtResource("10_3c6c5")
 player = NodePath("../Player")
+
+[node name="Main_Music" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("obstacle_timer", "trap", "player", "inputs")]
+stream = ExtResource("11_ft7m3")
+script = ExtResource("12_xrlrm")
+obstacle_timer = NodePath("BeatTimer")
+trap = NodePath("../Traps")
+player = NodePath("../Player")
+inputs = NodePath("Input_Manager")
+
+[node name="BeatTimer" type="Timer" parent="Main_Music"]
+
+[node name="Input_Manager" parent="Main_Music" instance=ExtResource("13_sid5t")]
+position = Vector2(155.785, 85.7)
+
+[connection signal="timeout" from="Main_Music/BeatTimer" to="Main_Music" method="_on_beat_timer_timeout"]

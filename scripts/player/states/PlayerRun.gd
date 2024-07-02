@@ -4,7 +4,7 @@ class_name PlayerRun
 @export var player : CharacterBody2D
 
 func Enter():
-	print("Running")
+	player.curr_state = "Running"
 	player.animator.play("run")
 
 func Update(_delta: float):

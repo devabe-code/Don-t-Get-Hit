@@ -5,14 +5,14 @@ class_name PlayerRoll
 @export var player : CharacterBody2D
 
 func Enter():
-	print("Rolling")
+	player.curr_state = "Rolling"
 	done_roll = false
 	player.is_rolling = true
-	player.can_be_hit = false
+	player.hitbox.monitoring = false
 	player.animator.play("roll")
 
 func Update(_delta):
 	if (done_roll):
-		player.can_be_hit = true
+		player.hitbox.monitoring = true
 		player.is_rolling = false
 		state_transition.emit(self, "PlayerRun")

@@ -13,5 +13,5 @@ func _process(_delta):
 func check_speed():
 	if (player.player_to_screen * screen_scale > get_viewport().size.x/2):
 		position.x += .25
-	elif (player.player_to_screen * screen_scale < get_viewport().size.x/4):
+	elif (player.player_to_screen * screen_scale < get_viewport().size.x/10):
 		position.x -= .25
