@@ -332,17 +332,19 @@ radius = 6.25
 height = 22.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0rauq"]
-size = Vector2(66, 143)
+size = Vector2(74, 143)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1jsfd"]
 size = Vector2(13, 15)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "speed_timer", "hitbox") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animator", "speed_timer", "hitbox", "trap_col", "label") groups=["Player"]]
 collision_layer = 2
 script = ExtResource("1_copo1")
 animator = NodePath("AnimationPlayer")
 speed_timer = NodePath("Timer")
 hitbox = NodePath("Hitbox")
+trap_col = NodePath("ActivationArea")
+label = NodePath("Label")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -392,7 +394,7 @@ animator = NodePath("../../AnimationPlayer")
 [node name="ActivationArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ActivationArea"]
-position = Vector2(21, -71.5)
+position = Vector2(25, -71.5)
 shape = SubResource("RectangleShape2D_0rauq")
 debug_color = Color(0.624922, 0.53218, 7.70092e-07, 0.42)
 
@@ -403,6 +405,15 @@ position = Vector2(-0.5, -11.5)
 shape = SubResource("RectangleShape2D_1jsfd")
 debug_color = Color(0.992857, 0, 0.246095, 0.42)
 
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -5.0
+offset_top = -66.0
+offset_right = 35.0
+offset_bottom = -43.0
+text = "dead"
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="ActivationArea" to="." method="_on_activation_area_area_entered"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="area_exited" from="Hitbox" to="." method="_on_hitbox_area_exited"]

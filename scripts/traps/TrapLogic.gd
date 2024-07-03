@@ -18,6 +18,8 @@ var trap_types := [saw_trap, magic_trap, punch_trap, ceiling_trap]
 var traps : Array[Trap]
 var available_traps := []
 
+var inputs := preload("res://scenes/input_manager.tscn")
+
 func _ready():
 	pass
 
@@ -26,16 +28,23 @@ func _process(delta):
 		if trap.position.x + get_viewport_rect().size.x < camera.position.x:
 			traps.erase(trap)
 			remove_child(trap)
+	for trap in traps:
+		if trap == player.anim_trap.get_parent():
+			if !trap.animator.is_playing():
+				trap.animator.play(trap.animation_name)
 
 func trap_on_frame():
 	if curr_trap:
 		return (curr_trap.position.x > camera.position.x - get_viewport_rect().size.x/2)
 
 func place_trap():
-	if (player.MOVE_SPEED > 180):
-		trap.animator.speed_scale = 1 + float(player.MOVE_SPEED/player.DIFFICULTY)/100
-	
 	trap.position = Vector2i(trap_x, trap_y)
+	var new_input = inputs.instantiate()
+	set_arrow_dir(trap.name)
+	new_input.get_node("Arrow").play(arrow_dir)
+	new_input.position.x = trap.position.x - 40
+	new_input.position.y = trap.position.y 
+	add_child(new_input)
 	add_child(trap)
 	traps.append(trap)
 
@@ -62,14 +71,11 @@ func set_traps():
 		available_traps.erase(saw_trap)
 	var trap_type = available_traps[randi() % available_traps.size()]
 	trap = trap_type.instantiate()
-	
 	var trap_height = trap.get_node("Sprite2D").texture.get_height()
 	var trap_scale = trap.get_node("Sprite2D").scale
-	
 	
 	trap_x = camera.position.x + get_viewport_rect().size.x
 	trap_y = get_viewport_rect().size.y - (trap_height * trap_scale.y/2)
 	curr_trap = trap
-	set_arrow_dir(trap.name)
 	place_trap()
 	

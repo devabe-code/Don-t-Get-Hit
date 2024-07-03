@@ -69,9 +69,8 @@ position = Vector2(0, -1.755)
 script = ExtResource("10_3c6c5")
 player = NodePath("../Player")
 
-[node name="Player" parent="." node_paths=PackedStringArray("trap") instance=ExtResource("5_6fbs2")]
+[node name="Player" parent="." instance=ExtResource("5_6fbs2")]
 position = Vector2(160, 180)
-trap = NodePath("../Traps")
 
 [node name="CameraBody" type="CharacterBody2D" parent="." node_paths=PackedStringArray("player")]
 position = Vector2(160, 119.275)
@@ -91,17 +90,15 @@ script = ExtResource("7_5an1i")
 camera = NodePath("../CameraBody")
 player = NodePath("../Player")
 
-[node name="Main_Music" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("obstacle_timer", "trap", "player", "inputs")]
+[node name="Input_Manager" parent="Traps" instance=ExtResource("13_sid5t")]
+
+[node name="Main_Music" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("obstacle_timer", "trap", "player")]
 stream = ExtResource("11_ft7m3")
 script = ExtResource("12_xrlrm")
 obstacle_timer = NodePath("BeatTimer")
 trap = NodePath("../Traps")
 player = NodePath("../Player")
-inputs = NodePath("Input_Manager")
 
 [node name="BeatTimer" type="Timer" parent="Main_Music"]
-
-[node name="Input_Manager" parent="Main_Music" instance=ExtResource("13_sid5t")]
-position = Vector2(155.785, 85.7)
 
 [connection signal="timeout" from="Main_Music/BeatTimer" to="Main_Music" method="_on_beat_timer_timeout"]

@@ -1,34 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfa8gtvw8w83q"]
+[gd_scene load_steps=6 format=3 uid="uid://dfa8gtvw8w83q"]
 
 [ext_resource type="Script" path="res://scripts/misc/Trap.gd" id="1_j4p4o"]
 [ext_resource type="Texture2D" uid="uid://vkt8v5iwras0" path="res://assets/obstacle/Foozle_2DS0007_Pixel_Trap_Pack/Ceiling Trap - Level 1.png" id="2_0xo3q"]
-
-[sub_resource type="Animation" id="Animation_vjk3t"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame_coords")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [Vector2i(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Area2D/CollisionShape2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, -52.5)]
-}
 
 [sub_resource type="Animation" id="Animation_ewens"]
 resource_name = "ceiling_trap"
@@ -55,17 +28,28 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5, 0.6, 0.9, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(1, -52.5), Vector2(1, -48.227), Vector2(1, 54.43), Vector2(1, 52.415), Vector2(1, -45.155)]
+"values": [Vector2(23.5, -52), Vector2(18, -49), Vector2(-0.500001, 54.5186), Vector2(1, 52.415), Vector2(1, -45.155)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D/CollisionShape2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(3.005, 3.005)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rfmyk"]
 _data = {
-"RESET": SubResource("Animation_vjk3t"),
 "ceiling_trap": SubResource("Animation_ewens")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kkus2"]
-size = Vector2(64, 16.86)
+size = Vector2(13.6439, 5.6696)
 
 [node name="Ceiling_Trap" type="Node2D" node_paths=PackedStringArray("animator", "collider")]
 script = ExtResource("1_j4p4o")
@@ -79,6 +63,7 @@ position = Vector2(0, -1.53)
 scale = Vector2(2, 2)
 texture = ExtResource("2_0xo3q")
 hframes = 14
+frame = 12
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -88,5 +73,5 @@ libraries = {
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(1, -52.5)
+position = Vector2(23.5, -52)
 shape = SubResource("RectangleShape2D_kkus2")

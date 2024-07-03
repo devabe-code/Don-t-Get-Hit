@@ -41,7 +41,7 @@ _data = {
 "punch_trap": SubResource("Animation_wpueq")
 }
 
-[node name="Punch_Trap" type="Node2D" node_paths=PackedStringArray("animator")]
+[node name="Trap" type="Node2D" node_paths=PackedStringArray("animator")]
 script = ExtResource("1_r16e6")
 animator = NodePath("AnimationPlayer")
 animation_name = "punch_trap"

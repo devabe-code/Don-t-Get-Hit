@@ -45,13 +45,11 @@ func check_dir():
 func play_acc(arrow_scale : float):
 	if  ((arrow_scale > .4) and 
 		(arrow_scale < .6) and check_dir()):
-		print("playing")
 		inputs.get_node("AnimationPlayer").play("ok")
 	elif ((arrow_scale > .7) and 
 		 (arrow_scale < .9) and check_dir()):
 		inputs.get_node("AnimationPlayer").play("good")
 	elif ((arrow_scale == 1) and check_dir()):
-		print("playing")
 		inputs.get_node("AnimationPlayer").play("perfect")
 	elif  ((arrow_scale > 0) and 
 		(arrow_scale <= .3) and check_dir()):

@@ -204,8 +204,9 @@ sprite_frames = SubResource("SpriteFrames_ossub")
 
 [node name="Arrow" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(1e-05, 1e-05)
 sprite_frames = SubResource("SpriteFrames_5yfui")
+animation = &"arrow_down"
+frame_progress = 0.942466
 
 [node name="Acc" type="Sprite2D" parent="."]
 texture = ExtResource("9_cprmn")

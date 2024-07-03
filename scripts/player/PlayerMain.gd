@@ -4,10 +4,10 @@ class_name PlayerMain
 @onready var fsm = $StateMachine as StateMachine
 
 @export var animator : AnimationPlayer
-@export var dash_max := int(300)
+@export var dash_max := int(400)
 @export var speed_timer : Timer
 @export var hitbox : Area2D
-@export var trap : Node2D
+@export var trap_col : Area2D
 
 var DIFFICULTY = int(4)
 var MOVE_SPEED = int(150)
@@ -20,6 +20,9 @@ var is_rolling := bool(false)
 var can_dash := bool(false)
 var can_jump := bool(true)
 var curr_state : String
+var anim_trap : Area2D
+
+@export var label : Label
 
 func _ready():
 	speed_timer.start(DIFFICULTY)
@@ -70,11 +73,11 @@ func LessenDash(delta):
 func _on_timer_timeout():
 	if MOVE_SPEED < 300:
 		MOVE_SPEED += 5
+		trap_col.scale.x += .05
 
 func _on_hitbox_area_entered(area):
 	print("dead")
 	#fsm.force_change_state("PlayerDeath")
 
-
 func _on_activation_area_area_entered(area):
-	print(area.get_parent().animation_name)
+	anim_trap = area
